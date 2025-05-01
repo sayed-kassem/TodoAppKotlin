@@ -9,14 +9,14 @@ plugins {
 
 android {
     namespace = "com.example.todoapp"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.todoapp"
-        minSdk = 36
+        minSdk = 35
 
         //noinspection OldTargetApi
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

@@ -2,6 +2,7 @@ package com.example.todoapp.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
@@ -29,15 +31,30 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilterBar(
     selectedFilter: String,
-    onFilterSelected: (String) -> Unit
+    onFilterSelected: (String) -> Unit,
 ) {
     val filters = listOf("All", "Active", "Completed")
     var previousIndex by remember { mutableStateOf(filters.indexOf(selectedFilter)) }
 
+    var visible by remember { mutableStateOf(false)}
+
+    val offsetY by animateDpAsState(
+        targetValue = if(visible) 0.dp else 40.dp,
+        animationSpec = tween(durationMillis = 600, easing = FastOutSlowInEasing ),
+        label = "slideInOffset"
+    )
+    val alpha = (1f - (offsetY.value / 40f)).coerceIn(0f, 1f)
+
+    LaunchedEffect(Unit) {
+        visible = true
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .offset(y = offsetY)
+            .alpha(alpha),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         filters.forEachIndexed { index, filter ->
