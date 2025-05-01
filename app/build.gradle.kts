@@ -71,6 +71,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    implementation("androidx.compose.animation:animation:1.6.1")
+    implementation("androidx.compose.foundation:foundation:1.6.1")
+
 
 //    testImplementation(libs.junit)
 //    androidTestImplementation(libs.androidx.junit)
